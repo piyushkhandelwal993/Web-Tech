@@ -1,279 +1,211 @@
-### Lecture Plan: Callbacks, Promises, Async/Await
+### Lecture Plan: Creating a Basic Interactive Webpage with HTML, CSS, and JavaScript
 #### Duration: 2 Hours
 
 ---
 
 ### Lecture Breakdown
 
-#### Part 1: Callbacks (40 Minutes)
+#### Part 1: Introduction and Setup (20 Minutes)
 
-**1. Introduction to Callbacks (15 Minutes)**
+**1. Overview of HTML, CSS, and JavaScript Integration (10 Minutes)**
 - **Step-by-Step Explanation:**
-  - **Definition:** A callback is a function passed into another function as an argument and executed after the completion of the outer function.
-  - **Syntax:**
-    ```javascript
-    function doSomething(callback) {
-        // Perform some action
-        callback();
-    }
-    ```
+  - **HTML (Structure):** Defines the structure of the webpage using tags.
+  - **CSS (Styling):** Styles the HTML elements to enhance the visual appearance.
+  - **JavaScript (Behavior):** Adds interactivity and dynamic content to the webpage.
+
+- **Example:**
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Interactive Webpage</title>
+      <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+      <script src="script.js"></script>
+  </body>
+  </html>
+  ```
+
+**2. Setting Up the Project (10 Minutes)**
+- **Step-by-Step Explanation:**
+  - **Create HTML, CSS, and JavaScript Files:** `index.html`, `styles.css`, and `script.js`.
   - **Example:**
-    ```javascript
-    function fetchData(callback) {
-        setTimeout(() => {
-            console.log("Data fetched");
-            callback();
-        }, 2000);
-    }
-
-    function processData() {
-        console.log("Processing data");
-    }
-
-    fetchData(processData);
-    ```
-
-**Checkpoint Questions:**
-  - What is a callback function?
-  - How do you pass a callback function into another function?
-  - What is the purpose of using callbacks?
+    - **HTML File:**
+      ```html
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Interactive Webpage</title>
+          <link rel="stylesheet" href="styles.css">
+      </head>
+      <body>
+          <h1>Interactive Form</h1>
+          <form id="myForm">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required>
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+              <button type="submit">Submit</button>
+          </form>
+          <p id="message"></p>
+          <script src="script.js"></script>
+      </body>
+      </html>
+      ```
 
 ---
 
-**2. Common Issues with Callbacks (10 Minutes)**
-- **Edge Cases and Tricky Concepts:**
-  - **Callback Hell:** When callbacks are nested within each other, leading to hard-to-read and maintain code.
+#### Part 2: HTML Form Creation (20 Minutes)
+
+**1. Building the Form (10 Minutes)**
+- **Step-by-Step Explanation:**
+  - **Form Elements:** `input`, `label`, and `button` elements.
+  - **Attributes:** `type`, `id`, `name`, and `required` attributes.
   - **Example:**
-    ```javascript
-    doSomething(() => {
-        doAnotherThing(() => {
-            doYetAnotherThing(() => {
-                // Callback Hell
-            });
-        });
-    });
+    ```html
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Submit</button>
+    </form>
     ```
-  - **Solution:** Promises and Async/Await can help mitigate callback hell.
+
+**2. Styling the Form with CSS (10 Minutes)**
+- **Step-by-Step Explanation:**
+  - **Basic Styling:** Font, colors, margins, and padding.
+  - **Example:**
+    ```css
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    button {
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    ```
 
 **Checkpoint Questions:**
-  - What is callback hell?
-  - How can you avoid callback hell in your code?
+  - What are the roles of HTML, CSS, and JavaScript in web development?
+  - How do you link a CSS file to an HTML file?
+  - What does the `required` attribute do in a form?
 
 ---
 
-**3. Error Handling in Callbacks (15 Minutes)**
-- **Exceptions and Error Handling:**
-  - **Error Callback:** Handling errors by passing an error object as the first argument to the callback.
+#### Part 3: Adding JavaScript for Form Validation and Dynamic Content (40 Minutes)
+
+**1. Form Validation Using JavaScript (20 Minutes)**
+- **Step-by-Step Explanation:**
+  - **Event Handling:** Attach an event listener to the form submission.
+  - **Validation Logic:** Check if fields are filled and display error messages.
   - **Example:**
     ```javascript
-    function fetchData(callback) {
-        let error = false;
-        setTimeout(() => {
-            if (error) {
-                callback("Error occurred", null);
-            } else {
-                callback(null, "Data fetched");
-            }
-        }, 2000);
-    }
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form from submitting
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let message = "";
 
-    fetchData((err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(data);
+        if (name === "") {
+            message += "Name is required.<br>";
         }
-    });
-    ```
-
-**Checkpoint Questions:**
-  - How do you handle errors in callback functions?
-  - What is the role of the error parameter in a callback function?
-
----
-
-#### Part 2: Promises (40 Minutes)
-
-**1. Introduction to Promises (15 Minutes)**
-- **Step-by-Step Explanation:**
-  - **Definition:** A Promise is an object representing the eventual completion or failure of an asynchronous operation.
-  - **Syntax:**
-    ```javascript
-    let promise = new Promise((resolve, reject) => {
-        // Asynchronous operation
-        if (/* success */) {
-            resolve(result);
-        } else {
-            reject(error);
+        if (email === "") {
+            message += "Email is required.<br>";
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            message += "Email is not valid.<br>";
         }
-    });
-    ```
-  - **Example:**
-    ```javascript
-    function fetchData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve("Data fetched");
-            }, 2000);
-        });
-    }
 
-    fetchData().then(data => {
-        console.log(data);
-    }).catch(err => {
-        console.error(err);
+        document.getElementById("message").innerHTML = message;
     });
     ```
 
-**Checkpoint Questions:**
-  - What is a Promise?
-  - What are the `resolve` and `reject` functions in a Promise?
-  - How do you handle successful and failed Promise outcomes?
-
----
-
-**2. Chaining Promises (10 Minutes)**
+**2. Dynamic Content Update (20 Minutes)**
 - **Step-by-Step Explanation:**
-  - **Chaining:** Allows you to perform sequential asynchronous operations.
+  - **Update Content:** Change content based on form submission.
   - **Example:**
     ```javascript
-    fetchData()
-        .then(data => {
-            console.log(data);
-            return processData(data);
-        })
-        .then(result => {
-            console.log(result);
-        })
-        .catch(err => {
-            console.error(err);
-        });
-    ```
-
-**Checkpoint Questions:**
-  - How do you chain multiple Promises together?
-  - What is the purpose of chaining Promises?
-
----
-
-**3. Error Handling in Promises (15 Minutes)**
-- **Edge Cases and Tricky Concepts:**
-  - **Error Propagation:** Errors in any part of the chain will be caught by the nearest `catch` block.
-  - **Example:**
-    ```javascript
-    fetchData()
-        .then(data => {
-            // Some code that may throw an error
-            throw new Error("An error occurred");
-        })
-        .catch(err => {
-            console.error(err);
-        });
-    ```
-
-**Checkpoint Questions:**
-  - How do you handle errors in a chain of Promises?
-  - What happens if an error occurs in the middle of a Promise chain?
-
----
-
-#### Part 3: Async/Await (40 Minutes)
-
-**1. Introduction to Async/Await (15 Minutes)**
-- **Step-by-Step Explanation:**
-  - **Definition:** `async` and `await` simplify the syntax for working with Promises, making asynchronous code look synchronous.
-  - **Syntax:**
-    ```javascript
-    async function fetchData() {
-        let result = await someAsyncOperation();
-        return result;
-    }
-    ```
-  - **Example:**
-    ```javascript
-    async function fetchData() {
-        let result = await new Promise((resolve) => {
-            setTimeout(() => {
-                resolve("Data fetched");
-            }, 2000);
-        });
-        return result;
-    }
-
-    fetchData().then(data => {
-        console.log(data);
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form from submitting
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        document.getElementById("message").innerHTML = `Thank you, ${name}. We have received your email: ${email}.`;
     });
     ```
 
 **Checkpoint Questions:**
-  - What is the purpose of the `async` keyword?
-  - How does `await` work with Promises?
+  - How do you prevent the default form submission behavior in JavaScript?
+  - What is the purpose of the `preventDefault` method in the form submission event?
+  - How can you validate an email address in JavaScript?
 
 ---
 
-**2. Error Handling with Async/Await (15 Minutes)**
-- **Step-by-Step Explanation:**
-  - **Try/Catch:** Use `try` and `catch` blocks to handle errors in asynchronous functions.
-  - **Example:**
-    ```javascript
-    async function fetchData() {
-        try {
-            let result = await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    reject("Error occurred");
-                }, 2000);
-            });
-            return result;
-        } catch (error) {
-            console.error(error);
-        }
-    }
+#### Part 4: Edge Cases, Tricky Concepts, and Exceptions (20 Minutes)
 
-    fetchData();
-    ```
+**1. Handling Edge Cases and Exceptions**
+- **Edge Cases:**
+  - Empty fields or invalid input formats.
+  - Non-standard characters or whitespace.
+- **Tricky Concepts:**
+  - Handling form input data types correctly.
+  - Ensuring cross-browser compatibility for form validation.
+- **Example:**
+  ```javascript
+  document.getElementById("myForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form from submitting
+      let name = document.getElementById("name").value.trim(); // Trim whitespace
+      let email = document.getElementById("email").value.trim(); // Trim whitespace
+      let message = "";
 
-**Checkpoint Questions:**
-  - How do you handle errors in an async function?
-  - What is the role of `try` and `catch` blocks in async functions?
+      if (name === "") {
+          message += "Name is required.<br>";
+      }
+      if (email === "") {
+          message += "Email is required.<br>";
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+          message += "Email is not valid.<br>";
+      }
 
----
+      document.getElementById("message").innerHTML = message;
+  });
+  ```
 
-**3. Combining Async/Await with Other Asynchronous Patterns (10 Minutes)**
-- **Edge Cases and Tricky Concepts:**
-  - **Mixing Async/Await with Callbacks or Promises:** Understand how to integrate different asynchronous patterns.
-  - **Example:**
-    ```javascript
-    function fetchData() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve("Data fetched");
-            }, 2000);
-        });
-    }
-
-    async function processData() {
-        let data = await fetchData();
-        console.log(data);
-    }
-
-    processData();
-    ```
-
-**Checkpoint Questions:**
-  - How can you integrate async/await with existing callback-based code?
-  - What are the advantages of using async/await over Promises?
+**Post Lecture Questions:**
+  - How would you modify the form validation to handle a specific edge case (e.g., missing characters in email)?
+  - What are some potential issues with client-side validation, and how would you address them?
+  - How can you improve the accessibility of your form for users with disabilities?
 
 ---
 
-### Post Lecture Questions (10 Minutes)
-
-**To measure understanding and retention:**
-1. Write a function using callbacks to simulate fetching data from a server and processing it.
-2. Convert the callback-based function from question 1 into a Promise-based function.
-3. Using `async/await`, write a function that fetches data and processes it, handling any potential errors.
-
-**Final Summary and Q&A (10 Minutes)**
+### Summary and Q&A (10 Minutes)
 - **Recap key concepts:**
-  - Callbacks, Promises, Async/Await
-  - Error handling and common pitfalls
-- **Open floor for any questions or clarifications.**
+  - HTML structure, CSS styling, and JavaScript behavior.
+  - Form validation and dynamic content updates.
+  - Handling edge cases and ensuring robustness.
+
+- **Questions from students.**
